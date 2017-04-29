@@ -43,6 +43,7 @@
         //            });
         //        });
         $(document).ready(function () {
+            pull_data()
             $('#pull_data').click(function () {
                 pull_data()
             });
@@ -73,7 +74,7 @@
                         function getPointsFromData(data) {
                             points = []
                             data.forEach(function (element) {
-                                points.push(new google.maps.LatLng(element.latitude, element.longitude))
+                                points.push({ location: new google.maps.LatLng(element.latitude, element.longitude), weight: element.brightness })
                             });
                             return points
                         }
@@ -429,42 +430,43 @@
                             <div id="map" style=" height: 800px;">
                                 <script type="text/javascript">
                                     function initMap() {
-                                        var mapOptions = {
-                                            zoom: 15,
-                                            center: new google.maps.LatLng(41.850033, -87.6500523),
-                                            mapTypeId: 'terrain'
-                                        };
-                                        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                                        var geocoder = new google.maps.Geocoder();
-                                        var heatmap = new google.maps.visualization.HeatmapLayer({
-                                            data: getRandomUSAPoints(),
-                                            map: map
-                                        });
-                                        geocoder.geocode({ 'address': 'US' }, function (results, status) {
-                                            var ne = results[0].geometry.viewport.getNorthEast();
-                                            var sw = results[0].geometry.viewport.getSouthWest();
+                                        // pull_data()
+                                        //     var mapOptions = {
+                                        //         zoom: 15,
+                                        //         center: new google.maps.LatLng(41.850033, -87.6500523),
+                                        //         mapTypeId: 'terrain'
+                                        //     };
+                                        //     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                                        //     var geocoder = new google.maps.Geocoder();
+                                        //     var heatmap = new google.maps.visualization.HeatmapLayer({
+                                        //         data: getRandomUSAPoints(),
+                                        //         map: map
+                                        //     });
+                                        //     geocoder.geocode({ 'address': 'US' }, function (results, status) {
+                                        //         var ne = results[0].geometry.viewport.getNorthEast();
+                                        //         var sw = results[0].geometry.viewport.getSouthWest();
 
-                                            map.fitBounds(results[0].geometry.viewport);
-                                        });
-                                    }
-                                    function getRandomUSAPoints() {
-                                        //usa boundries (49.3982, -124.6825) , (25.292, -124.6825), (49.398, -67.0133), (25.292, -67.0133)
-                                        var points = []
-                                        for (var i = 0; i <= 999; i++) {
-                                            points.push(new google.maps.LatLng(getRandomInRange(25, 49, 3), getRandomInRange(-124, -67, 3)))
-                                        }
-                                        var x = 49.3982
-                                        var y = -124.6825
-                                        for (var i = 0; i <= 10; i++) {
-                                            // x += 0.001
-                                            // y += 0.001
-                                            console.log(x, y)
-                                            points.push(new google.maps.LatLng(x, y))
-                                        }
-                                        return points
-                                    }
-                                    function getRandomInRange(from, to, fixed) {
-                                        return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+                                        //         map.fitBounds(results[0].geometry.viewport);
+                                        //     });
+                                        // }
+                                        // function getRandomUSAPoints() {
+                                        //     //usa boundries (49.3982, -124.6825) , (25.292, -124.6825), (49.398, -67.0133), (25.292, -67.0133)
+                                        //     var points = []
+                                        //     for (var i = 0; i <= 999; i++) {
+                                        //         points.push(new google.maps.LatLng(getRandomInRange(25, 49, 3), getRandomInRange(-124, -67, 3)))
+                                        //     }
+                                        //     var x = 49.3982
+                                        //     var y = -124.6825
+                                        //     for (var i = 0; i <= 10; i++) {
+                                        //         // x += 0.001
+                                        //         // y += 0.001
+                                        //         console.log(x, y)
+                                        //         points.push(new google.maps.LatLng(x, y))
+                                        //     }
+                                        //     return points
+                                        // }
+                                        // function getRandomInRange(from, to, fixed) {
+                                        //     return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
                                     }
                                 </script>
                                 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAkd15YdCs6wDX4i5Ck5Nw_HBZaW6JEZs&libraries=visualization&callback=initMap">

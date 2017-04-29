@@ -23,7 +23,7 @@ class PerdictionClient():
         iter_csv = pd.read_csv('data/data.csv', header=0, names=["latitude", "longitude", "brightness", "bright_t31",
                                                                  "confidence", "acq_time", "acq_date", "net_lat_o", "net_lat", "net_lon_o", "net_lon"],
                                iterator=True, chunksize=1000)
-        df = pd.concat([chunk[chunk['acq_date'] == '2016-01-09']
+        df = pd.concat([chunk[chunk['acq_date'] != '']
                         for chunk in iter_csv])
         print df
         return df.to_json(orient='records')
