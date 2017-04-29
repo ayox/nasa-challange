@@ -125,6 +125,18 @@ body {
     font-weight: bold;
     border: solid;
 }
+
+.pinkk{
+    background-color: #FF1174;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-default:hover{
+    background-color: #FF1174;
+    color: white;
+    font-weight: bold;
+}
 .btn-outline {
   color: inherit;
   background-color: transparent;
