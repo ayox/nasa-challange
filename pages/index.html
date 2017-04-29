@@ -32,7 +32,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <!--<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>-->
 
 </head>
 
@@ -289,7 +289,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /.row -->
+            <!-- /.row MAPUSA -->
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default">
@@ -302,15 +302,15 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
+                                        <li><a href="#">Pull Data</a>
                                         </li>
-                                        <li><a href="#">Another action</a>
+                                        <!--<li><a href="#">Another action</a>
                                         </li>
                                         <li><a href="#">Something else here</a>
                                         </li>
                                         <li class="divider"></li>
                                         <li><a href="#">Separated link</a>
-                                        </li>
+                                        </li>-->
                                     </ul>
                                 </div>
                             </div>
@@ -319,26 +319,46 @@
                         <div class="panel-body">
                             <div id="map" style=" height: 800px;">
                                 <script type="text/javascript">
-                                    var mapOptions = {
-                                        zoom: 15,
-                                        mapTypeId: 'satellite'
-                                    };
-                                    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                                    var geocoder = new google.maps.Geocoder();
+                                    function initMap() {
+                                        var mapOptions = {
+                                            zoom: 15,
+                                            center: new google.maps.LatLng(41.850033, -87.6500523),
+                                            mapTypeId: 'terrain'
+                                        };
+                                        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                                        var geocoder = new google.maps.Geocoder();
+                                        var heatmap = new google.maps.visualization.HeatmapLayer({
+                                            data: getRandomUSAPoints(),
+                                            map: map
+                                        });
+                                        geocoder.geocode({ 'address': 'US' }, function (results, status) {
+                                            var ne = results[0].geometry.viewport.getNorthEast();
+                                            var sw = results[0].geometry.viewport.getSouthWest();
 
-                                    geocoder.geocode({ 'address': 'US' }, function (results, status) {
-                                        var ne = results[0].geometry.viewport.getNorthEast();
-                                        var sw = results[0].geometry.viewport.getSouthWest();
+                                            map.fitBounds(results[0].geometry.viewport);
+                                        });
+                                    }
+                                    function getRandomUSAPoints() {
+                                        //usa boundries (49.3982, -124.6825) , (25.292, -124.6825), (49.398, -67.0133), (25.292, -67.0133)
+                                        var points = []
+                                        for (var i = 0; i <= 999; i++) {
+                                            points.push(new google.maps.LatLng(getRandomInRange(25, 49, 3), getRandomInRange(-124, -67, 3)))
+                                        }
+                                        console.log(points)
+                                        return points
+                                    }
+                                    function getRandomInRange(from, to, fixed) {
+                                        return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+                                    }
+                                </script>
+                                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAkd15YdCs6wDX4i5Ck5Nw_HBZaW6JEZs&libraries=visualization&callback=initMap">
 
-                                        map.fitBounds(results[0].geometry.viewport);
-                                    });
                                 </script>
                             </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
-                    
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
