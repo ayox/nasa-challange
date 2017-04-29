@@ -1,9 +1,9 @@
 # author = rhnvrm <hello@rohanverma.net>
 import os
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, send_from_directory
 from model import PerdictionClient
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../pages')
 api = PerdictionClient()
 
 
@@ -24,7 +24,8 @@ def prediction():
 
     # tweets = api.get_tweets()
     perdiction = api.get_perdiction()
-    return jsonify({'data': perdiction})
+
+    return perdiction
 
 
 port = int(os.environ.get('PORT', 5000))
