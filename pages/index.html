@@ -48,12 +48,13 @@
                 pull_data()
             });
             function pull_data() {
+                console.log('pull_Data')
                 $.ajax({
-                    url: 'http://0.0.0.0:5000/perdiction',
-                    dataType: 'json',
+                    url: '/data/perdiction-data.json',
                     type: 'GET',
                     success: function (data) {
-                        console.log(data)
+                        console.log('success')
+                        console.log(data.length)
                         var mapOptions = {
                             zoom: 15,
                             mapTypeId: 'terrain'
@@ -78,7 +79,12 @@
                             });
                             return points
                         }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
                     }
+
                 });
             }
         })
@@ -124,10 +130,6 @@
 </head>
 
 <body>
-    <div class="ui-widget">
-        <label for="tags">Tags: </label>
-        <input id="tags">
-    </div>
 
     <div id="wrapper">
 

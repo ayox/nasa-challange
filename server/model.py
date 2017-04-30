@@ -25,7 +25,6 @@ class PerdictionClient():
                                iterator=True, chunksize=1000)
         df = pd.concat([chunk[chunk['acq_date'] != '']
                         for chunk in iter_csv])
-        print df
         return df.to_json(orient='records')
 
 
